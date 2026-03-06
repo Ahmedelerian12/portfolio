@@ -122,6 +122,7 @@ const PROJECTS: Project[] = [
       "Secure VPC with subnet segmentation",
     ],
     icon: <Cloud className="w-6 h-6" />,
+    imageUrl: "/AWS High Availability Infrastructure.png",
   },
   {
     title: "Node.js Microservices Migration",
@@ -134,6 +135,7 @@ const PROJECTS: Project[] = [
       "Streamlined CI/CD with containerization",
     ],
     icon: <Container className="w-6 h-6" />,
+    imageUrl: "/Node.js Microservices Migration.png",
   },
   {
     title: "Active Directory Enterprise Network",
