@@ -46,11 +46,16 @@ interface Project {
   imageUrl?: string;
 }
 
+interface ExperienceResponsibility {
+  summary: string;
+  details?: React.ReactNode;
+}
+
 interface Experience {
   role: string;
   company: string;
   period: string;
-  responsibilities: string[];
+  responsibilities: ExperienceResponsibility[];
 }
 
 interface Certification {
@@ -151,12 +156,186 @@ const EXPERIENCE: Experience[] = [
     company: "ISTQServer",
     period: "Oct 2024 — Present",
     responsibilities: [
-      "Maintain and install software across Linux-based environments, including Ubuntu and CentOS, ensuring server stability and performance",
-      "Automate server installations and configurations using tools like Netplan and VMware for HP ProLiant Gen8 and Gen9 servers",
-      "Manage server infrastructure through HP Integrated Lights-Out (iLO), enhancing server accessibility and monitoring",
-      "Conduct troubleshooting and diagnostics to identify and resolve system issues efficiently",
-      "Implement RAID configurations and NIC bonding to optimize server performance and data redundancy",
-      "Ensure compliance with organizational policies by proactively maintaining secure and robust systems",
+      {
+        summary: "Maintain and install software across Linux-based environments, including Ubuntu and CentOS, ensuring server stability and performance",
+        details: (
+          <div className="space-y-4">
+            <p className="text-zinc-300">You are responsible for managing Linux servers and making sure the required software is installed, updated, and running correctly.</p>
+            <div>
+              <strong className="text-white block mb-2">What you actually do:</strong>
+              <div className="space-y-2 text-sm">
+                <p>Install packages using: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">apt</code> on Ubuntu, <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">yum</code> or <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">dnf</code> on CentOS</p>
+                <p>Update servers: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">sudo apt update && apt upgrade</code></p>
+                <p>Install services like: Nginx, Docker, Monitoring tools</p>
+                <p>Monitor: CPU usage, RAM usage, Disk space, Running services</p>
+              </div>
+            </div>
+            <div>
+              <strong className="text-white block mb-2">Why it matters:</strong>
+              <ul className="list-disc pl-5 space-y-1 text-sm">
+                <li>Servers do not crash</li>
+                <li>Applications run smoothly</li>
+                <li>Security patches are applied regularly</li>
+              </ul>
+            </div>
+          </div>
+        )
+      },
+      {
+        summary: "Automate server installations and configurations using tools like Netplan and VMware for HP ProLiant Gen8 and Gen9 servers",
+        details: (
+          <div className="space-y-4">
+            <p className="text-zinc-300">Instead of manually configuring every server, you automate setup processes.</p>
+            <div>
+              <strong className="text-white block mb-2">Network Configuration (Netplan)</strong>
+              <pre className="bg-black/50 p-3 rounded-lg text-xs font-mono text-zinc-300 overflow-x-auto border border-white/5">
+                {`network:
+  version: 2
+  ethernets:
+    ens160:
+      addresses:
+        - 192.168.1.10/24
+      gateway4: 192.168.1.1`}
+              </pre>
+              <p className="text-sm mt-2">Apply config: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">netplan apply</code></p>
+            </div>
+            <div>
+              <strong className="text-white block mb-2">Virtualization & Hardware</strong>
+              <p className="text-sm">Using VMware to create virtual machines, test environments, and deploy servers faster on HP ProLiant Gen8 and Gen9 servers.</p>
+            </div>
+            <div>
+              <strong className="text-white block mb-2">Benefits:</strong>
+              <ul className="list-disc pl-5 space-y-1 text-sm">
+                <li>Reduces manual errors</li>
+                <li>Reduces setup time</li>
+                <li>Prevents configuration inconsistencies</li>
+              </ul>
+            </div>
+          </div>
+        )
+      },
+      {
+        summary: "Manage server infrastructure through HP Integrated Lights-Out (iLO), enhancing server accessibility and monitoring",
+        details: (
+          <div className="space-y-4">
+            <p className="text-zinc-300">You manage servers remotely even if the OS is down using HP iLO.</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <strong className="text-white block mb-2">Remote server control:</strong>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  <li>Power ON / OFF servers</li>
+                  <li>Restart servers</li>
+                  <li>Open remote console</li>
+                  <li>Mount ISO remotely</li>
+                  <li>Install OS remotely</li>
+                </ul>
+              </div>
+              <div>
+                <strong className="text-white block mb-2">Hardware monitoring:</strong>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  <li>CPU temperature</li>
+                  <li>Fan speed</li>
+                  <li>Power supply status</li>
+                  <li>Disk health</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )
+      },
+      {
+        summary: "Conduct troubleshooting and diagnostics to identify and resolve system issues efficiently",
+        details: (
+          <div className="space-y-4">
+            <p className="text-zinc-300">When something breaks, you find the problem and fix it quickly.</p>
+            <div className="space-y-3">
+              <div>
+                <strong className="text-white block mb-1">Server not reachable:</strong>
+                <p className="text-sm">Check: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary mr-1">ping</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary mr-1">ip a</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">ip route</code></p>
+              </div>
+              <div>
+                <strong className="text-white block mb-1">Service not running:</strong>
+                <p className="text-sm code mb-1">Example:</p>
+                <div className="font-mono text-xs bg-black/50 p-2 rounded border border-white/5 space-y-1 text-zinc-300">
+                  <div>systemctl status nginx</div>
+                  <div>systemctl restart nginx</div>
+                </div>
+              </div>
+              <div>
+                <strong className="text-white block mb-1">Disk full:</strong>
+                <p className="text-sm">Check: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary mr-1">df -h</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">du -sh *</code></p>
+              </div>
+              <div>
+                <strong className="text-white block mb-1">System logs:</strong>
+                <p className="text-sm">Analyze logs: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary mr-1">journalctl -xe</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">cat /var/log/syslog</code></p>
+              </div>
+            </div>
+            <p className="text-sm text-zinc-400 mt-2 italic">Fast troubleshooting reduces downtime, service interruptions, and business impact.</p>
+          </div>
+        )
+      },
+      {
+        summary: "Implement RAID configurations and NIC bonding to optimize server performance and data redundancy",
+        details: (
+          <div className="space-y-4">
+            <p className="text-sm text-brand-primary font-mono uppercase tracking-wider">Data center level system administration</p>
+
+            <div>
+              <strong className="text-white block mb-2">RAID Configuration (mdadm)</strong>
+              <p className="text-sm mb-2">Redundant Array of Independent Disks — Protects data & improves performance.</p>
+              <div className="overflow-hidden rounded-lg border border-white/10">
+                <table className="w-full text-sm text-left">
+                  <thead className="bg-white/5 text-xs uppercase font-mono text-zinc-300">
+                    <tr><th className="px-4 py-2">RAID</th><th className="px-4 py-2">Purpose</th></tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 bg-black/20 text-zinc-400">
+                    <tr><td className="px-4 py-2 font-mono text-white">RAID0</td><td className="px-4 py-2">Speed</td></tr>
+                    <tr><td className="px-4 py-2 font-mono text-white">RAID1</td><td className="px-4 py-2">Mirroring</td></tr>
+                    <tr><td className="px-4 py-2 font-mono text-white">RAID5</td><td className="px-4 py-2">Balance</td></tr>
+                    <tr><td className="px-4 py-2 font-mono text-white">RAID10</td><td className="px-4 py-2">Speed + redundancy</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div>
+              <strong className="text-white block mb-2">NIC Bonding</strong>
+              <p className="text-sm mb-2">Combining multiple network cards into one logical interface (e.g., <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">bond0</code>).</p>
+              <p className="text-xs text-zinc-400 font-mono mb-2">Example: 2 × 1Gbps NIC → bonded → 2Gbps logical interface.</p>
+              <ul className="list-disc pl-5 space-y-1 text-sm text-zinc-300">
+                <li>Higher network speed</li>
+                <li>Network redundancy</li>
+                <li>Failover protection</li>
+              </ul>
+            </div>
+          </div>
+        )
+      },
+      {
+        summary: "Ensure compliance with organizational policies by proactively maintaining secure and robust systems",
+        details: (
+          <div className="space-y-4">
+            <p className="text-zinc-300">You maintain servers according to security and operational standards.</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-2 text-sm">
+                <strong className="text-white block">Security tasks:</strong>
+                <div>User management: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary text-xs">useradd</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary text-xs">passwd</code></div>
+                <div>Permissions: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary text-xs">chmod</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary text-xs">chown</code></div>
+                <div>Firewall: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary text-xs">ufw</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary text-xs">iptables</code></div>
+                <div>Updates: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary text-xs">apt upgrade</code></div>
+              </div>
+              <div className="space-y-2 text-sm">
+                <strong className="text-white block">Access control:</strong>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>SSH key authentication</li>
+                  <li>Disabling root login</li>
+                  <li>Restricted sudo access</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )
+      },
     ],
   },
   {
@@ -164,10 +343,10 @@ const EXPERIENCE: Experience[] = [
     company: "TICO for Touristic Investments",
     period: "May 2024 — Oct 2024",
     responsibilities: [
-      "Provided technical support for restaurants utilizing a restaurant management system, ensuring seamless operations",
-      "Diagnosed and resolved hardware, software, and network issues, improving system reliability and performance",
-      "Collaborated with vendors and team members to implement system upgrades and troubleshoot application-related problems",
-      "Configured and maintained Windows Server environments and managed connectivity through Sophos firewalls and VNC tools",
+      { summary: "Provided technical support for restaurants utilizing a restaurant management system, ensuring seamless operations" },
+      { summary: "Diagnosed and resolved hardware, software, and network issues, improving system reliability and performance" },
+      { summary: "Collaborated with vendors and team members to implement system upgrades and troubleshoot application-related problems" },
+      { summary: "Configured and maintained Windows Server environments and managed connectivity through Sophos firewalls and VNC tools" },
     ],
   },
 ];
@@ -424,6 +603,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [demoModal, setDemoModal] = useState<{ open: boolean; url: string; title: string }>({ open: false, url: "", title: "" });
   const [imageModal, setImageModal] = useState<{ open: boolean; url: string; title: string }>({ open: false, url: "", title: "" });
+  const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -908,14 +1088,48 @@ export default function App() {
                 </div>
               </div>
               <ul className="space-y-3">
-                {exp.responsibilities.map((resp, i) => (
-                  <li key={i} className="text-zinc-400 flex gap-3 text-sm leading-relaxed">
-                    <span className="text-brand-primary mt-1 flex-shrink-0">
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </span>
-                    {resp}
-                  </li>
-                ))}
+                {exp.responsibilities.map((resp, i) => {
+                  const accordionId = `exp-${idx}-resp-${i}`;
+                  const isOpen = activeAccordion === accordionId;
+                  const hasDetails = !!resp.details;
+
+                  return (
+                    <li key={i} className="text-sm leading-relaxed">
+                      <div
+                        className={`flex gap-3 px-4 py-3 rounded-lg border transition-all ${hasDetails ? "cursor-pointer hover:bg-white/5" : ""
+                          } ${isOpen ? "bg-white/5 border-brand-primary/30" : "border-transparent"}`}
+                        onClick={() => hasDetails && setActiveAccordion(isOpen ? null : accordionId)}
+                      >
+                        <span className="text-brand-primary mt-0.5 flex-shrink-0 transition-transform duration-300">
+                          {hasDetails ? (
+                            <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${isOpen ? "rotate-90" : ""}`} />
+                          ) : (
+                            <ChevronRight className="w-3.5 h-3.5 mt-0.5" />
+                          )}
+                        </span>
+                        <div className="flex-1 text-zinc-300 leading-relaxed font-medium">
+                          {resp.summary}
+                        </div>
+                      </div>
+
+                      <AnimatePresence>
+                        {isOpen && hasDetails && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pl-12 pr-4 py-4 mt-1 bg-black/20 rounded-lg border border-white/5">
+                              {resp.details}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </li>
+                  );
+                })}
               </ul>
             </motion.div>
           ))}
