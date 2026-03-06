@@ -343,10 +343,149 @@ const EXPERIENCE: Experience[] = [
     company: "TICO for Touristic Investments",
     period: "May 2024 — Oct 2024",
     responsibilities: [
-      { summary: "Provided technical support for restaurants utilizing a restaurant management system, ensuring seamless operations" },
-      { summary: "Diagnosed and resolved hardware, software, and network issues, improving system reliability and performance" },
-      { summary: "Collaborated with vendors and team members to implement system upgrades and troubleshoot application-related problems" },
-      { summary: "Configured and maintained Windows Server environments and managed connectivity through Sophos firewalls and VNC tools" },
+      {
+        summary: "Provided technical support for restaurants utilizing a restaurant management system, ensuring seamless operations",
+        details: (
+          <div className="space-y-4">
+            <p className="text-zinc-300">You supported restaurants that depend on a restaurant management / POS system to run their daily operations.</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <strong className="text-white block mb-2">Systems handled:</strong>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-zinc-300">
+                  <li>Orders</li>
+                  <li>Billing</li>
+                  <li>Kitchen tickets</li>
+                  <li>Inventory & Reports</li>
+                  <li>Payment systems</li>
+                </ul>
+              </div>
+              <div>
+                <strong className="text-white block mb-2">Typical tasks:</strong>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-zinc-300">
+                  <li>Fix POS terminals</li>
+                  <li>Connect printers</li>
+                  <li>Fix order synchronization</li>
+                  <li>Restore system when it stops</li>
+                  <li>Support branches remotely</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <strong className="text-white block mb-2">Example real scenario:</strong>
+              <p className="text-sm mb-1 italic">"A restaurant cannot print orders in the kitchen."</p>
+              <p className="text-sm">You would check: POS system status, Printer connection, Network connectivity, Application configuration.</p>
+              <p className="text-sm text-brand-primary mt-1 font-mono">Goal: restore service quickly so restaurant operations continue.</p>
+            </div>
+          </div>
+        )
+      },
+      {
+        summary: "Diagnosed and resolved hardware, software, and network issues, improving system reliability and performance",
+        details: (
+          <div className="space-y-4">
+            <p className="text-zinc-300">Worked on multiple layers of IT troubleshooting.</p>
+            <div className="space-y-4">
+              <div>
+                <strong className="text-white block mb-1">Hardware issues</strong>
+                <p className="text-sm text-zinc-400 mb-1">Examples: POS terminal not powering on, Printer not working, Network switch failure, Hard disk failure.</p>
+                <p className="text-sm">Actions: Replace hardware, Reconnect cables, Check power supplies.</p>
+              </div>
+              <div>
+                <strong className="text-white block mb-1">Software issues</strong>
+                <p className="text-sm text-zinc-400 mb-1">Examples: POS application crashes, Database errors, Windows service stopped.</p>
+                <p className="text-sm">Troubleshooting: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary mr-1">services.msc</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary mr-1">eventvwr</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">task manager</code></p>
+              </div>
+              <div>
+                <strong className="text-white block mb-1">Network issues</strong>
+                <p className="text-sm text-zinc-400 mb-1">Examples: POS terminals cannot reach server, Branch cannot connect to main server.</p>
+                <p className="text-sm">Check: <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary mr-1">ping</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary mr-1">ipconfig</code> <code className="bg-white/10 px-1.5 py-0.5 rounded text-brand-primary">tracert</code></p>
+              </div>
+            </div>
+            <p className="text-sm text-zinc-400 mt-2 italic">This improves uptime, application performance, and network reliability.</p>
+          </div>
+        )
+      },
+      {
+        summary: "Collaborated with vendors and team members to implement system upgrades and troubleshoot application-related problems",
+        details: (
+          <div className="space-y-4">
+            <p className="text-zinc-300">Worked with external vendors (software providers) and internal IT teams.</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <strong className="text-white block mb-2">Example upgrade scenario:</strong>
+                <p className="text-sm text-zinc-400 mb-1 italic">"A vendor releases a new POS system update."</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-zinc-300">
+                  <li>Scheduling update time</li>
+                  <li>Installing update on server</li>
+                  <li>Testing POS terminals</li>
+                  <li>Checking database compatibility</li>
+                  <li>Monitoring system after deployment</li>
+                </ul>
+              </div>
+              <div>
+                <strong className="text-white block mb-2">Example troubleshooting scenario:</strong>
+                <p className="text-sm text-zinc-400 mb-1 italic">"If a bug appears in the POS system."</p>
+                <ul className="list-disc pl-5 space-y-1 text-sm text-zinc-300">
+                  <li>Collect logs</li>
+                  <li>Reproduce the issue</li>
+                  <li>Send data to the vendor</li>
+                  <li>Apply patches</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        )
+      },
+      {
+        summary: "Configured and maintained Windows Server environments and managed connectivity through Sophos firewalls and VNC tools",
+        details: (
+          <div className="space-y-4">
+            <p className="text-sm text-brand-primary font-mono uppercase tracking-wider">Infrastructure administration</p>
+
+            <div className="space-y-4">
+              <div>
+                <strong className="text-white block mb-2">Windows Server Administration</strong>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <span className="text-sm font-medium text-zinc-300 block mb-1">User Management (AD)</span>
+                    <ul className="list-disc pl-5 space-y-1 text-sm text-zinc-400">
+                      <li>Create users & reset passwords</li>
+                      <li>Manage permissions</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <span className="text-sm font-medium text-zinc-300 block mb-1">File Sharing & Services</span>
+                    <ul className="list-disc pl-5 space-y-1 text-sm text-zinc-400">
+                      <li>Shared folders & network drives</li>
+                      <li>Monitor DB & print services</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <strong className="text-white block mb-2">Firewall Management (Sophos)</strong>
+                <p className="text-sm mb-2 text-zinc-300">Purpose: connect restaurant branches securely, protect network, manage VPNs.</p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <ul className="list-disc pl-5 space-y-1 text-sm text-zinc-400">
+                    <li>Configure firewall rules</li>
+                    <li>Allow application ports</li>
+                    <li>Monitor traffic</li>
+                  </ul>
+                  <p className="text-sm text-brand-primary/80 font-mono bg-black/20 p-2 rounded border border-white/5">
+                    Example: Branch → Main server via VPN tunnel on Sophos
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <strong className="text-white block mb-1">Remote Access (VNC)</strong>
+                <p className="text-sm text-zinc-300">Purpose: Remote control computers in restaurants to troubleshoot POS, install updates, and restart services without physical presence.</p>
+              </div>
+            </div>
+          </div>
+        )
+      },
     ],
   },
 ];
