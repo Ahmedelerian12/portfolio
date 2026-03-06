@@ -543,7 +543,7 @@ const CERTIFICATIONS: Certification[] = [
     issuer: "TryHackMe",
     date: "February 2024",
     verifyUrl: "https://tryhackme.com/p/0x3l3ri4n?tab=certificates",
-    badgeUrl: "https://assets.tryhackme.com/img/paths/jr-penetration-tester.svg",
+    badgeUrl: "/tryhackme-jr-pentest-badge.png",
   },
 ];
 
