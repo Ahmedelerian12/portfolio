@@ -1,0 +1,950 @@
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import {
+  Terminal,
+  Cloud,
+  Container,
+  Network,
+  Shield,
+  Code2,
+  Database,
+  Github,
+  Linkedin,
+  Mail,
+  Phone,
+  MapPin,
+  ExternalLink,
+  Award,
+  Briefcase,
+  GraduationCap,
+  ChevronRight,
+  ChevronUp,
+  Server,
+  Download,
+  Menu,
+  X,
+  Send,
+  CheckCircle,
+  Cpu,
+  Cog,
+  Globe,
+  Wrench,
+  Play,
+  Maximize2,
+  Minimize2,
+} from "lucide-react";
+
+// --- Types ---
+interface Project {
+  title: string;
+  description: string;
+  tech: string[];
+  achievements: string[];
+  icon: React.ReactNode;
+  demoUrl?: string;
+}
+
+interface Experience {
+  role: string;
+  company: string;
+  period: string;
+  responsibilities: string[];
+}
+
+interface Certification {
+  name: string;
+  issuer: string;
+  date: string;
+  validUntil?: string;
+  credentialId?: string;
+  verifyUrl?: string;
+}
+
+// --- Data ---
+const NAV_LINKS = [
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#contact", label: "Contact" },
+];
+
+const SKILLS = {
+  "Cloud & DevOps": {
+    icon: <Cloud className="w-5 h-5" />,
+    items: ["AWS (EC2, ECS, ALB, VPC)", "Docker", "Kubernetes", "CI/CD Pipelines", "CodePipeline", "Fargate"],
+  },
+  "System Admin": {
+    icon: <Server className="w-5 h-5" />,
+    items: ["Linux (Ubuntu, CentOS, RHEL)", "Windows Server", "RAID Configuration", "NIC Bonding", "HP iLO", "VMware"],
+  },
+  "Networking": {
+    icon: <Network className="w-5 h-5" />,
+    items: ["DNS Configuration", "NFS", "Load Balancing", "Security Groups", "Subnet Architecture", "Sophos Firewall"],
+  },
+  "Scripting & Tools": {
+    icon: <Code2 className="w-5 h-5" />,
+    items: ["Bash Scripting", "Python", "Ansible", "Git", "Node.js", "Automation"],
+  },
+};
+
+const PROJECTS: Project[] = [
+  {
+    title: "ISTQServer — IT Infrastructure Management",
+    description:
+      "Built a full-stack IT infrastructure management platform to monitor and manage 85+ servers across 4 datacenters, with real-time dashboards, network analysis, order tracking, and iLO integration.",
+    tech: ["React", "Node.js", "MongoDB", "REST API", "Recharts", "iLO"],
+    achievements: [
+      "Real-time dashboard for 85+ servers across 4 datacenters",
+      "Network/subnet analysis with switch port mapping",
+      "Order management with priority tracking & Excel import",
+      "Role-based access control & user management",
+    ],
+    icon: <Server className="w-6 h-6" />,
+    demoUrl: "/demo/index.html",
+  },
+  {
+    title: "AWS High Availability Infrastructure",
+    description:
+      "Designed and implemented a highly available, fault-tolerant cloud architecture on AWS with auto-scaling groups, load balancers, and multi-AZ deployments.",
+    tech: ["EC2", "ASG", "ALB", "NLB", "VPC", "CloudWatch"],
+    achievements: [
+      "Multi-AZ deployment for 99.9% uptime",
+      "Auto-scaling for dynamic traffic handling",
+      "Secure VPC with subnet segmentation",
+    ],
+    icon: <Cloud className="w-6 h-6" />,
+  },
+  {
+    title: "Node.js Microservices Migration",
+    description:
+      "Successfully migrated a monolithic Node.js application to a cloud-native microservices architecture with Docker containers deployed on Amazon ECS.",
+    tech: ["Docker", "Amazon ECS", "Node.js", "CI/CD"],
+    achievements: [
+      "Dockerized application for portable deployment",
+      "Independent service scaling and fault isolation",
+      "Streamlined CI/CD with containerization",
+    ],
+    icon: <Container className="w-6 h-6" />,
+  },
+  {
+    title: "Active Directory Enterprise Network",
+    description:
+      "Collaborated with a team to set up and manage a full enterprise network environment, including web servers, domain controllers, DNS, and security configurations.",
+    tech: ["Active Directory", "DNS", "Windows Server", "RODIC"],
+    achievements: [
+      "Configured ITI.LOCAL and Alex.ITI.LOCAL domains",
+      "Implemented DNS for web server resolution",
+      "Managed user permissions across multiple PCs",
+    ],
+    icon: <Network className="w-6 h-6" />,
+  },
+];
+
+const EXPERIENCE: Experience[] = [
+  {
+    role: "Linux System Administrator",
+    company: "ISTQServer",
+    period: "Oct 2024 — Present",
+    responsibilities: [
+      "Maintain and install software across Linux-based environments, including Ubuntu and CentOS, ensuring server stability and performance",
+      "Automate server installations and configurations using tools like Netplan and VMware for HP ProLiant Gen8 and Gen9 servers",
+      "Manage server infrastructure through HP Integrated Lights-Out (iLO), enhancing server accessibility and monitoring",
+      "Conduct troubleshooting and diagnostics to identify and resolve system issues efficiently",
+      "Implement RAID configurations and NIC bonding to optimize server performance and data redundancy",
+      "Ensure compliance with organizational policies by proactively maintaining secure and robust systems",
+    ],
+  },
+  {
+    role: "IT Specialist",
+    company: "TICO for Touristic Investments",
+    period: "May 2024 — Oct 2024",
+    responsibilities: [
+      "Provided technical support for restaurants utilizing a restaurant management system, ensuring seamless operations",
+      "Diagnosed and resolved hardware, software, and network issues, improving system reliability and performance",
+      "Collaborated with vendors and team members to implement system upgrades and troubleshoot application-related problems",
+      "Configured and maintained Windows Server environments and managed connectivity through Sophos firewalls and VNC tools",
+    ],
+  },
+];
+
+const CERTIFICATIONS: Certification[] = [
+  {
+    name: "Red Hat Certified System Administrator (RHCSA)",
+    issuer: "Red Hat",
+    date: "September 24, 2024",
+    validUntil: "September 24, 2027",
+    credentialId: "240-175-729",
+    verifyUrl: "https://rhtapps.redhat.com/verify?certId=240-175-729",
+  },
+  {
+    name: "AWS Academy Cloud Architecting",
+    issuer: "Amazon Web Services",
+    date: "2024",
+  },
+];
+
+const STATS = [
+  { value: "2+", label: "Years Experience" },
+  { value: "4+", label: "Major Projects" },
+  { value: "RHCSA", label: "Certified" },
+  { value: "10+", label: "Technologies" },
+];
+
+// --- Components ---
+
+const Section = ({
+  id,
+  label,
+  title,
+  children,
+  className = "",
+}: {
+  id: string;
+  label: string;
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <section id={id} className={`py-24 border-b border-brand-border relative overflow-hidden ${className}`}>
+    <div className="container mx-auto px-6 lg:px-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="section-label">{label}</div>
+        <h2 className="text-3xl md:text-5xl mb-14">{title}</h2>
+      </motion.div>
+      {children}
+    </div>
+  </section>
+);
+
+const MobileMenu = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => (
+  <AnimatePresence>
+    {isOpen && (
+      <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
+          onClick={onClose}
+        />
+        <motion.div
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed right-0 top-0 h-full w-72 bg-brand-surface border-l border-brand-border z-50 p-8"
+        >
+          <button onClick={onClose} className="absolute top-6 right-6 text-zinc-400 hover:text-white transition-colors">
+            <X className="w-6 h-6" />
+          </button>
+          <nav className="mt-16 flex flex-col gap-6">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={onClose}
+                className="font-mono text-sm uppercase tracking-widest text-zinc-400 hover:text-brand-primary transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="/Ahmed-Elerian-CV.pdf"
+              download
+              className="mt-4 bg-brand-primary text-black px-4 py-3 rounded-lg font-mono text-xs font-bold text-center hover:bg-white transition-colors flex items-center justify-center gap-2"
+            >
+              <Download className="w-4 h-4" /> DOWNLOAD CV
+            </a>
+          </nav>
+        </motion.div>
+      </>
+    )}
+  </AnimatePresence>
+);
+
+const ScrollToTop = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const toggle = () => setVisible(window.scrollY > 500);
+    window.addEventListener("scroll", toggle);
+    return () => window.removeEventListener("scroll", toggle);
+  }, []);
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-8 right-8 w-12 h-12 bg-brand-surface border border-brand-border rounded-xl flex items-center justify-center hover:border-brand-primary hover:text-brand-primary transition-all z-40 shadow-lg"
+          aria-label="Scroll to top"
+        >
+          <ChevronUp className="w-5 h-5" />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+};
+
+const ContactForm = () => {
+  const [sent, setSent] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const mailtoLink = `mailto:ahmedelerian1@gmail.com?subject=${encodeURIComponent(
+      formData.subject || "Portfolio Inquiry"
+    )}&body=${encodeURIComponent(
+      `Hi Ahmed,\n\nMy name is ${formData.name}.\n\n${formData.message}\n\nBest regards,\n${formData.name}\n${formData.email}`
+    )}`;
+    window.open(mailtoLink, "_blank");
+    setSent(true);
+    setTimeout(() => setSent(false), 4000);
+  };
+
+  return (
+    <form className="glass-card p-8 space-y-6" onSubmit={handleSubmit}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label className="text-[10px] uppercase text-zinc-500 font-mono tracking-wider">Name</label>
+          <input
+            type="text"
+            required
+            className="input-field"
+            placeholder="Your Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="text-[10px] uppercase text-zinc-500 font-mono tracking-wider">Email</label>
+          <input
+            type="email"
+            required
+            className="input-field"
+            placeholder="you@example.com"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          />
+        </div>
+      </div>
+      <div className="space-y-2">
+        <label className="text-[10px] uppercase text-zinc-500 font-mono tracking-wider">Subject</label>
+        <input
+          type="text"
+          className="input-field"
+          placeholder="Project Inquiry"
+          value={formData.subject}
+          onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="text-[10px] uppercase text-zinc-500 font-mono tracking-wider">Message</label>
+        <textarea
+          rows={4}
+          required
+          className="input-field resize-none"
+          placeholder="Tell me about your project..."
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+        />
+      </div>
+      <button
+        type="submit"
+        className="w-full bg-brand-primary text-black font-mono font-bold py-4 rounded-lg hover:bg-white transition-all duration-300 uppercase text-xs tracking-widest flex items-center justify-center gap-2 group"
+      >
+        {sent ? (
+          <>
+            <CheckCircle className="w-4 h-4" /> MESSAGE SENT
+          </>
+        ) : (
+          <>
+            SEND MESSAGE <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </>
+        )}
+      </button>
+    </form>
+  );
+};
+
+// --- Main App ---
+export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [demoModal, setDemoModal] = useState<{ open: boolean; url: string; title: string }>({ open: false, url: "", title: "" });
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen tech-grid">
+      {/* Navigation */}
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-brand-bg/90 backdrop-blur-xl border-b border-brand-border shadow-lg shadow-black/20" : "bg-transparent"
+          }`}
+      >
+        <div className="container mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
+          <a href="#" className="font-mono font-bold text-white tracking-tighter flex items-center gap-2 group">
+            <Terminal className="w-5 h-5 text-brand-primary group-hover:rotate-12 transition-transform" />
+            <span>ELERIAN<span className="text-brand-primary">.DEV</span></span>
+          </a>
+          <div className="hidden md:flex gap-8 font-mono text-[11px] uppercase tracking-widest">
+            {NAV_LINKS.map((link) => (
+              <a key={link.href} href={link.href} className="nav-link text-zinc-400">
+                {link.label}
+              </a>
+            ))}
+          </div>
+          <div className="flex items-center gap-3">
+            <a
+              href="/Ahmed-Elerian-CV.pdf"
+              download
+              className="hidden sm:flex bg-brand-primary text-black px-4 py-2 rounded-lg font-mono text-[11px] font-bold hover:bg-white transition-all duration-300 items-center gap-2"
+            >
+              <Download className="w-3.5 h-3.5" /> CV
+            </a>
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="md:hidden text-zinc-400 hover:text-white transition-colors"
+              aria-label="Open menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <MobileMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+
+      {/* Hero Section */}
+      <header className="pt-32 pb-24 border-b border-brand-border relative hero-gradient">
+        <div className="container mx-auto px-6 lg:px-12">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <div className="inline-block border border-brand-primary/30 bg-brand-primary/5 px-4 py-1.5 rounded-full mb-8">
+              <span className="text-brand-primary font-mono text-[10px] uppercase tracking-widest flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
+                </span>
+                Available for new opportunities
+              </span>
+            </div>
+
+            <h1 className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl mb-8 leading-[0.9]">
+              Ahmed <br />
+              <span className="gradient-text">Elerian</span>
+            </h1>
+
+            <p className="text-lg md:text-xl text-zinc-400 max-w-2xl font-mono leading-relaxed mb-12">
+              DevOps Engineer & System Administrator specializing in scalable infrastructure, cloud automation, and
+              high-availability systems.
+            </p>
+
+            <div className="flex flex-wrap gap-4 mb-16">
+              <a
+                href="#contact"
+                className="bg-brand-primary text-black px-6 py-3 rounded-lg font-mono text-xs font-bold hover:bg-white transition-all duration-300 flex items-center gap-2 group"
+              >
+                GET IN TOUCH <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a
+                href="/Ahmed-Elerian-CV.pdf"
+                download
+                className="border border-brand-border px-6 py-3 rounded-lg font-mono text-xs font-bold text-zinc-300 hover:border-brand-primary hover:text-brand-primary transition-all duration-300 flex items-center gap-2"
+              >
+                <Download className="w-4 h-4" /> DOWNLOAD CV
+              </a>
+            </div>
+
+            <div className="flex flex-wrap gap-8">
+              {[
+                { icon: <MapPin className="w-4 h-4" />, text: "Cairo, Egypt" },
+                { icon: <Award className="w-4 h-4" />, text: "RHCSA Certified" },
+                { icon: <Cloud className="w-4 h-4" />, text: "AWS Cloud Architecting" },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + i * 0.1 }}
+                  className="flex items-center gap-2 text-zinc-500 font-mono text-sm"
+                >
+                  <span className="text-brand-primary">{item.icon}</span>
+                  {item.text}
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Decorative floating elements */}
+        <div className="absolute right-10 top-1/2 -translate-y-1/2 opacity-[0.04] pointer-events-none hidden lg:block">
+          <Terminal className="w-[400px] h-[400px] floating" />
+        </div>
+      </header>
+
+      {/* Stats Bar */}
+      <div className="border-b border-brand-border bg-brand-surface/30">
+        <div className="container mx-auto px-6 lg:px-12 py-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {STATS.map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="text-center"
+              >
+                <div className="text-2xl md:text-3xl font-mono font-bold gradient-text mb-1">{stat.value}</div>
+                <div className="text-[10px] uppercase tracking-widest text-zinc-500 font-mono">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* About Section */}
+      <Section id="about" label="01 — Profile" title="Professional Summary">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
+          <div className="space-y-6">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-lg text-zinc-400 leading-relaxed"
+            >
+              I am a DevOps Engineer and System Administrator with hands-on experience in Linux systems, cloud
+              infrastructure, containerization, and automation. I specialize in building and maintaining scalable, secure
+              infrastructure.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-lg text-zinc-400 leading-relaxed"
+            >
+              My background includes managing Linux servers in data center environments, automating deployments with CI/CD
+              pipelines, working with AWS cloud services, and containerizing applications with Docker and Kubernetes.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-lg text-zinc-400 leading-relaxed"
+            >
+              I have the skills and knowledge to contribute effectively to IT operations and DevOps environments,
+              bringing a strong commitment to reliability, security, and continuous improvement.
+            </motion.p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="glass-card p-8 space-y-8"
+          >
+            <div>
+              <h3 className="text-xl mb-5 flex items-center gap-2">
+                <GraduationCap className="w-5 h-5 text-brand-primary" />
+                Education
+              </h3>
+              <div className="border-l-2 border-brand-border pl-5 space-y-5">
+                <div>
+                  <div className="text-white font-semibold">Bachelor's in Computer Science</div>
+                  <div className="text-sm text-zinc-500 mt-0.5">Misr University for Science and Technology</div>
+                </div>
+                <div>
+                  <div className="text-white font-semibold">System Admin & DevOps Track</div>
+                  <div className="text-sm text-zinc-500 mt-0.5">Information Technology Institute (ITI)</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl mb-5 flex items-center gap-2">
+                <Award className="w-5 h-5 text-brand-primary" />
+                Certifications
+              </h3>
+              <div className="space-y-3">
+                {CERTIFICATIONS.map((cert, i) => (
+                  <div
+                    key={i}
+                    className="p-4 bg-black/30 rounded-lg border border-white/5 hover:border-brand-primary/20 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <div className="text-white font-mono text-sm font-medium">{cert.name}</div>
+                        <div className="text-[11px] text-zinc-500 mt-1">
+                          {cert.issuer}
+                          {cert.credentialId && <span className="ml-2">• ID: {cert.credentialId}</span>}
+                        </div>
+                      </div>
+                      {cert.verifyUrl && (
+                        <a
+                          href={cert.verifyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-shrink-0 text-[10px] font-mono text-brand-primary border border-brand-primary/30 px-2 py-1 rounded hover:bg-brand-primary/10 transition-colors flex items-center gap-1"
+                        >
+                          VERIFY <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )}
+                    </div>
+                    {cert.validUntil && (
+                      <div className="mt-2 text-[10px] text-brand-primary/70 font-mono">
+                        Valid until {cert.validUntil}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </Section>
+
+      {/* Skills Section */}
+      <Section id="skills" label="02 — Expertise" title="Technical Skills">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {Object.entries(SKILLS).map(([category, { icon, items }], idx) => (
+            <motion.div
+              key={category}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="glass-card p-6 group"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+                  {icon}
+                </div>
+                <h3 className="text-brand-primary font-mono text-sm !normal-case !tracking-normal">{category}</h3>
+              </div>
+              <ul className="space-y-3">
+                {items.map((skill) => (
+                  <li key={skill} className="text-zinc-400 text-sm flex items-center gap-2.5">
+                    <div className="w-1.5 h-1.5 bg-brand-primary/40 rounded-full flex-shrink-0" />
+                    {skill}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Projects Section */}
+      <Section id="projects" label="03 — Portfolio" title="Key Projects">
+        <div className="grid md:grid-cols-2 gap-8">
+          {PROJECTS.map((project, idx) => (
+            <motion.div
+              key={project.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="glass-card overflow-hidden flex flex-col group"
+            >
+              <div className="p-8 flex-1">
+                <div className="w-12 h-12 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-5 group-hover:bg-brand-primary/20 transition-colors">
+                  {project.icon}
+                </div>
+                <h3 className="text-lg mb-3 !tracking-normal">{project.title}</h3>
+                <p className="text-zinc-400 text-sm mb-6 leading-relaxed">{project.description}</p>
+
+                <div className="space-y-5">
+                  <div>
+                    <div className="text-[10px] uppercase text-zinc-600 mb-3 font-mono tracking-wider">
+                      Key Achievements
+                    </div>
+                    <ul className="space-y-2">
+                      {project.achievements.map((a, i) => (
+                        <li key={i} className="text-xs text-zinc-400 flex gap-2 leading-relaxed">
+                          <ChevronRight className="w-3 h-3 text-brand-primary mt-0.5 flex-shrink-0" />
+                          {a}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span key={t} className="skill-tag">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {project.demoUrl && (
+                <div className="p-4 border-t border-brand-border bg-black/20 flex items-center justify-between">
+                  <button
+                    onClick={() => setDemoModal({ open: true, url: project.demoUrl!, title: project.title })}
+                    className="flex items-center gap-2 text-xs font-mono text-brand-primary hover:text-white transition-colors group/btn"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center group-hover/btn:bg-brand-primary/20 transition-colors">
+                      <Play className="w-4 h-4 fill-brand-primary" />
+                    </div>
+                    INTERACTIVE PREVIEW
+                  </button>
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-brand-primary transition-colors border border-brand-border px-3 py-1.5 rounded-lg hover:border-brand-primary/30"
+                  >
+                    OPEN FULL DEMO <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Demo Modal */}
+      <AnimatePresence>
+        {demoModal.open && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[60]"
+              onClick={() => setDemoModal({ open: false, url: "", title: "" })}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed inset-4 md:inset-8 z-[60] flex flex-col bg-brand-surface rounded-2xl border border-brand-border overflow-hidden shadow-2xl"
+            >
+              <div className="flex items-center justify-between px-6 py-3 border-b border-brand-border bg-black/40">
+                <div className="flex items-center gap-3">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                  </div>
+                  <span className="font-mono text-xs text-zinc-400">{demoModal.title}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={demoModal.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-500 hover:text-brand-primary transition-colors p-1"
+                    title="Open in new tab"
+                  >
+                    <Maximize2 className="w-4 h-4" />
+                  </a>
+                  <button
+                    onClick={() => setDemoModal({ open: false, url: "", title: "" })}
+                    className="text-zinc-500 hover:text-white transition-colors p-1"
+                    title="Close"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+              <div className="flex-1 bg-white">
+                <iframe
+                  src={demoModal.url}
+                  title={demoModal.title}
+                  className="w-full h-full border-0"
+                  allow="fullscreen"
+                />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Experience Section */}
+      <Section id="experience" label="04 — History" title="Professional Experience">
+        <div className="max-w-4xl space-y-16">
+          {EXPERIENCE.map((exp, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.15 }}
+              className="relative pl-8 border-l-2 border-brand-border hover:border-brand-primary/40 transition-colors"
+            >
+              <div className="absolute -left-[7px] top-0 w-3 h-3 bg-brand-primary rounded-full pulse-glow" />
+              <div className="flex flex-col md:flex-row md:items-center justify-between mb-5 gap-3">
+                <div>
+                  <h3 className="text-2xl text-white !tracking-normal">{exp.role}</h3>
+                  <div className="text-brand-primary font-mono text-sm mt-1">{exp.company}</div>
+                </div>
+                <div className="text-zinc-500 font-mono text-xs bg-brand-surface px-4 py-2 rounded-lg border border-brand-border whitespace-nowrap">
+                  {exp.period}
+                </div>
+              </div>
+              <ul className="space-y-3">
+                {exp.responsibilities.map((resp, i) => (
+                  <li key={i} className="text-zinc-400 flex gap-3 text-sm leading-relaxed">
+                    <span className="text-brand-primary mt-1 flex-shrink-0">
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </span>
+                    {resp}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Contact Section */}
+      <Section id="contact" label="05 — Connect" title="Get In Touch">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-xl text-zinc-400 mb-10 leading-relaxed">
+              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+              Let's build something great together.
+            </p>
+            <div className="space-y-5">
+              <a href="mailto:ahmedelerian1@gmail.com" className="flex items-center gap-4 group">
+                <div className="w-12 h-12 rounded-xl bg-brand-surface border border-brand-border flex items-center justify-center group-hover:border-brand-primary group-hover:bg-brand-primary/5 transition-all">
+                  <Mail className="w-5 h-5 text-brand-primary" />
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase text-zinc-600 font-mono tracking-wider">Email</div>
+                  <div className="text-white group-hover:text-brand-primary transition-colors">
+                    ahmedelerian1@gmail.com
+                  </div>
+                </div>
+              </a>
+              <a href="tel:+201093029138" className="flex items-center gap-4 group">
+                <div className="w-12 h-12 rounded-xl bg-brand-surface border border-brand-border flex items-center justify-center group-hover:border-brand-primary group-hover:bg-brand-primary/5 transition-all">
+                  <Phone className="w-5 h-5 text-brand-primary" />
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase text-zinc-600 font-mono tracking-wider">Phone</div>
+                  <div className="text-white group-hover:text-brand-primary transition-colors">+20 1093029138</div>
+                </div>
+              </a>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-brand-surface border border-brand-border flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-brand-primary" />
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase text-zinc-600 font-mono tracking-wider">Location</div>
+                  <div className="text-white">Cairo, Egypt</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-10 flex gap-3">
+              <a
+                href="https://github.com/Ahmedelerian12"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-11 h-11 rounded-xl bg-brand-surface border border-brand-border flex items-center justify-center text-zinc-400 hover:border-brand-primary hover:text-brand-primary hover:bg-brand-primary/5 transition-all"
+                aria-label="GitHub"
+              >
+                <Github className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/ahmed-elerian-110372364/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-11 h-11 rounded-xl bg-brand-surface border border-brand-border flex items-center justify-center text-zinc-400 hover:border-brand-primary hover:text-brand-primary hover:bg-brand-primary/5 transition-all"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a
+                href="mailto:ahmedelerian1@gmail.com"
+                className="w-11 h-11 rounded-xl bg-brand-surface border border-brand-border flex items-center justify-center text-zinc-400 hover:border-brand-primary hover:text-brand-primary hover:bg-brand-primary/5 transition-all"
+                aria-label="Email"
+              >
+                <Mail className="w-5 h-5" />
+              </a>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+            <ContactForm />
+          </motion.div>
+        </div>
+      </Section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-brand-border bg-black/40">
+        <div className="container mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="font-mono text-[10px] text-zinc-600 uppercase tracking-widest">
+            © {new Date().getFullYear()} Ahmed Abdelmonem Elerian. All rights reserved.
+          </div>
+          <div className="flex gap-6">
+            <a
+              href="https://github.com/Ahmedelerian12"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-600 hover:text-brand-primary transition-colors"
+              aria-label="GitHub"
+            >
+              <Github className="w-4 h-4" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ahmed-elerian-110372364/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-600 hover:text-brand-primary transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a
+              href="mailto:ahmedelerian1@gmail.com"
+              className="text-zinc-600 hover:text-brand-primary transition-colors"
+              aria-label="Email"
+            >
+              <Mail className="w-4 h-4" />
+            </a>
+          </div>
+          <div className="flex items-center gap-2 font-mono text-[10px] text-zinc-600">
+            <span className="w-2 h-2 bg-brand-primary rounded-full animate-pulse"></span>
+            SYSTEM ONLINE
+          </div>
+        </div>
+      </footer>
+
+      <ScrollToTop />
+    </div>
+  );
+}
