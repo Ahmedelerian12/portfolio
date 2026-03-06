@@ -71,6 +71,7 @@ interface Certification {
 // --- Data ---
 const NAV_LINKS = [
   { href: "#about", label: "About" },
+  { href: "#certifications", label: "Certifications" },
   { href: "#skills", label: "Skills" },
   { href: "#projects", label: "Projects" },
   { href: "#experience", label: "Experience" },
