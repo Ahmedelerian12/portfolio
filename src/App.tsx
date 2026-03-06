@@ -538,12 +538,19 @@ const CERTIFICATIONS: Certification[] = [
     date: "December 2023",
     badgeUrl: "https://images.credly.com/images/af8c6b4e-fc31-47c4-8dcb-eb7a2065dc5b/I2CS__1_.png",
   },
+  {
+    name: "Jr Penetration Tester",
+    issuer: "TryHackMe",
+    date: "February 2024",
+    verifyUrl: "https://tryhackme.com/p/0x3l3ri4n?tab=certificates",
+    badgeUrl: "https://assets.tryhackme.com/img/paths/jr-penetration-tester.svg",
+  },
 ];
 
 const STATS = [
   { value: "2+", label: "Years Experience" },
   { value: "4+", label: "Major Projects" },
-  { value: "7", label: "Certifications" },
+  { value: "8", label: "Certifications" },
   { value: "10+", label: "Technologies" },
 ];
 
