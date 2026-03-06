@@ -617,60 +617,65 @@ export default function App() {
                 </div>
               </div>
             </div>
-
-            <div>
-              <h3 className="text-xl mb-5 flex items-center gap-2">
-                <Award className="w-5 h-5 text-brand-primary" />
-                Certifications & Badges
-                <a
-                  href="https://www.credly.com/users/ahmed-elerian.48c4709e"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-auto text-[10px] font-mono text-zinc-500 hover:text-brand-primary transition-colors flex items-center gap-1"
-                >
-                  View Credly Profile <ExternalLink className="w-3 h-3" />
-                </a>
-              </h3>
-              <div className="grid grid-cols-1 gap-3">
-                {CERTIFICATIONS.map((cert, i) => (
-                  <div
-                    key={i}
-                    className="p-3 bg-black/30 rounded-lg border border-white/5 hover:border-brand-primary/20 transition-colors flex items-center gap-3"
-                  >
-                    {cert.badgeUrl && (
-                      <img
-                        src={cert.badgeUrl}
-                        alt={cert.name}
-                        className="w-10 h-10 rounded-lg object-contain flex-shrink-0"
-                      />
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <div className="text-white font-mono text-xs font-medium truncate">{cert.name}</div>
-                      <div className="text-[10px] text-zinc-500 mt-0.5">
-                        {cert.issuer} • {cert.date}
-                        {cert.credentialId && <span className="ml-1">• ID: {cert.credentialId}</span>}
-                      </div>
-                    </div>
-                    {cert.verifyUrl && (
-                      <a
-                        href={cert.verifyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-shrink-0 text-[9px] font-mono text-brand-primary border border-brand-primary/30 px-2 py-1 rounded hover:bg-brand-primary/10 transition-colors flex items-center gap-1"
-                      >
-                        VERIFY <ExternalLink className="w-2.5 h-2.5" />
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
           </motion.div>
         </div>
       </Section>
 
+      {/* Certifications & Badges Section */}
+      <Section id="certifications" label="02 — Credentials" title="Certifications & Badges">
+        <div className="flex items-center justify-end mb-8 -mt-4">
+          <a
+            href="https://www.credly.com/users/ahmed-elerian.48c4709e"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-mono text-zinc-500 hover:text-brand-primary transition-colors flex items-center gap-1.5 border border-brand-border px-4 py-2 rounded-lg hover:border-brand-primary/30"
+          >
+            View Credly Profile <ExternalLink className="w-3 h-3" />
+          </a>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {CERTIFICATIONS.map((cert, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+              className="glass-card p-5 flex flex-col items-center text-center group hover:border-brand-primary/30 transition-all"
+            >
+              {cert.badgeUrl && (
+                <img
+                  src={cert.badgeUrl}
+                  alt={cert.name}
+                  className="w-20 h-20 object-contain mb-4 group-hover:scale-110 transition-transform duration-300"
+                />
+              )}
+              <div className="text-white font-mono text-xs font-medium mb-1">{cert.name}</div>
+              <div className="text-[10px] text-zinc-500 mb-1">{cert.issuer}</div>
+              <div className="text-[10px] text-zinc-600 font-mono">{cert.date}</div>
+              {cert.credentialId && (
+                <div className="text-[9px] text-zinc-600 font-mono mt-1">ID: {cert.credentialId}</div>
+              )}
+              {cert.validUntil && (
+                <div className="text-[9px] text-brand-primary/60 font-mono mt-1">Valid until {cert.validUntil}</div>
+              )}
+              {cert.verifyUrl && (
+                <a
+                  href={cert.verifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 text-[9px] font-mono text-brand-primary border border-brand-primary/30 px-3 py-1 rounded-full hover:bg-brand-primary/10 transition-colors flex items-center gap-1"
+                >
+                  VERIFY <ExternalLink className="w-2.5 h-2.5" />
+                </a>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
       {/* Skills Section */}
-      <Section id="skills" label="02 — Expertise" title="Technical Skills">
+      <Section id="skills" label="03 — Expertise" title="Technical Skills">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {Object.entries(SKILLS).map(([category, { icon, items }], idx) => (
             <motion.div
@@ -701,7 +706,7 @@ export default function App() {
       </Section>
 
       {/* Projects Section */}
-      <Section id="projects" label="03 — Portfolio" title="Key Projects">
+      <Section id="projects" label="04 — Portfolio" title="Key Projects">
         <div className="grid md:grid-cols-2 gap-8">
           {PROJECTS.map((project, idx) => (
             <motion.div
@@ -881,7 +886,7 @@ export default function App() {
       </AnimatePresence>
 
       {/* Experience Section */}
-      <Section id="experience" label="04 — History" title="Professional Experience">
+      <Section id="experience" label="05 — History" title="Professional Experience">
         <div className="max-w-4xl space-y-16">
           {EXPERIENCE.map((exp, idx) => (
             <motion.div
