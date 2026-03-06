@@ -60,6 +60,7 @@ interface Certification {
   validUntil?: string;
   credentialId?: string;
   verifyUrl?: string;
+  badgeUrl?: string;
 }
 
 // --- Data ---
@@ -175,22 +176,54 @@ const CERTIFICATIONS: Certification[] = [
   {
     name: "Red Hat Certified System Administrator (RHCSA)",
     issuer: "Red Hat",
-    date: "September 24, 2024",
-    validUntil: "September 24, 2027",
+    date: "September 2024",
+    validUntil: "September 2027",
     credentialId: "240-175-729",
     verifyUrl: "https://rhtapps.redhat.com/verify?certId=240-175-729",
+    badgeUrl: "https://images.credly.com/images/572de0ba-2c59-4816-a59d-b0e1687e45ee/image.png",
   },
   {
     name: "AWS Academy Cloud Architecting",
     issuer: "Amazon Web Services",
-    date: "2024",
+    date: "September 2024",
+    badgeUrl: "https://images.credly.com/images/fcafd0c9-42da-4703-a191-0c397203dc1b/blob",
+  },
+  {
+    name: "AWS Academy Cloud Foundations",
+    issuer: "Amazon Web Services",
+    date: "August 2024",
+    badgeUrl: "https://images.credly.com/images/e3541a0c-dd4a-4820-8052-5001006efc85/blob",
+  },
+  {
+    name: "Cloud and Virtualization Concepts",
+    issuer: "Broadcom (VMware IT Academy)",
+    date: "July 2024",
+    badgeUrl: "https://images.credly.com/images/8ca28f8d-5ac0-49d7-b783-608cd4a61072/image.png",
+  },
+  {
+    name: "CCNA: Introduction to Networks",
+    issuer: "Cisco",
+    date: "June 2024",
+    badgeUrl: "https://images.credly.com/images/70d71df5-f3dc-4380-9b9d-f22513a70417/CCNAITN__1_.png",
+  },
+  {
+    name: "Networking Basics",
+    issuer: "Cisco",
+    date: "January 2024",
+    badgeUrl: "https://images.credly.com/images/5bdd6a39-3e03-4444-9510-ecff80c9ce79/image.png",
+  },
+  {
+    name: "Introduction to Cybersecurity",
+    issuer: "Cisco",
+    date: "December 2023",
+    badgeUrl: "https://images.credly.com/images/af8c6b4e-fc31-47c4-8dcb-eb7a2065dc5b/I2CS__1_.png",
   },
 ];
 
 const STATS = [
   { value: "2+", label: "Years Experience" },
   { value: "4+", label: "Major Projects" },
-  { value: "RHCSA", label: "Certified" },
+  { value: "7", label: "Certifications" },
   { value: "10+", label: "Technologies" },
 ];
 
@@ -588,37 +621,45 @@ export default function App() {
             <div>
               <h3 className="text-xl mb-5 flex items-center gap-2">
                 <Award className="w-5 h-5 text-brand-primary" />
-                Certifications
+                Certifications & Badges
+                <a
+                  href="https://www.credly.com/users/ahmed-elerian.48c4709e"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-auto text-[10px] font-mono text-zinc-500 hover:text-brand-primary transition-colors flex items-center gap-1"
+                >
+                  View Credly Profile <ExternalLink className="w-3 h-3" />
+                </a>
               </h3>
-              <div className="space-y-3">
+              <div className="grid grid-cols-1 gap-3">
                 {CERTIFICATIONS.map((cert, i) => (
                   <div
                     key={i}
-                    className="p-4 bg-black/30 rounded-lg border border-white/5 hover:border-brand-primary/20 transition-colors"
+                    className="p-3 bg-black/30 rounded-lg border border-white/5 hover:border-brand-primary/20 transition-colors flex items-center gap-3"
                   >
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <div className="text-white font-mono text-sm font-medium">{cert.name}</div>
-                        <div className="text-[11px] text-zinc-500 mt-1">
-                          {cert.issuer}
-                          {cert.credentialId && <span className="ml-2">• ID: {cert.credentialId}</span>}
-                        </div>
+                    {cert.badgeUrl && (
+                      <img
+                        src={cert.badgeUrl}
+                        alt={cert.name}
+                        className="w-10 h-10 rounded-lg object-contain flex-shrink-0"
+                      />
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="text-white font-mono text-xs font-medium truncate">{cert.name}</div>
+                      <div className="text-[10px] text-zinc-500 mt-0.5">
+                        {cert.issuer} • {cert.date}
+                        {cert.credentialId && <span className="ml-1">• ID: {cert.credentialId}</span>}
                       </div>
-                      {cert.verifyUrl && (
-                        <a
-                          href={cert.verifyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-shrink-0 text-[10px] font-mono text-brand-primary border border-brand-primary/30 px-2 py-1 rounded hover:bg-brand-primary/10 transition-colors flex items-center gap-1"
-                        >
-                          VERIFY <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
                     </div>
-                    {cert.validUntil && (
-                      <div className="mt-2 text-[10px] text-brand-primary/70 font-mono">
-                        Valid until {cert.validUntil}
-                      </div>
+                    {cert.verifyUrl && (
+                      <a
+                        href={cert.verifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-shrink-0 text-[9px] font-mono text-brand-primary border border-brand-primary/30 px-2 py-1 rounded hover:bg-brand-primary/10 transition-colors flex items-center gap-1"
+                      >
+                        VERIFY <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
                     )}
                   </div>
                 ))}
