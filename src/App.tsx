@@ -1347,6 +1347,15 @@ export default function App() {
               >
                 <Mail className="w-5 h-5" />
               </a>
+              <a
+                href="https://tryhackme.com/p/0x3l3ri4n"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-11 h-11 rounded-xl bg-brand-surface border border-brand-border flex items-center justify-center text-zinc-400 hover:border-brand-primary hover:text-brand-primary hover:bg-brand-primary/5 transition-all"
+                aria-label="TryHackMe"
+              >
+                <Shield className="w-5 h-5" />
+              </a>
             </div>
           </motion.div>
 
@@ -1392,6 +1401,15 @@ export default function App() {
               aria-label="Email"
             >
               <Mail className="w-4 h-4" />
+            </a>
+            <a
+              href="https://tryhackme.com/p/0x3l3ri4n"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-600 hover:text-brand-primary transition-colors"
+              aria-label="TryHackMe"
+            >
+              <Shield className="w-4 h-4" />
             </a>
           </div>
           <div className="flex items-center gap-2 font-mono text-[10px] text-zinc-600">
