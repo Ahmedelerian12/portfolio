@@ -32,6 +32,7 @@ import {
   Play,
   Maximize2,
   Minimize2,
+  Eye,
 } from "lucide-react";
 
 // --- Types ---
@@ -42,6 +43,7 @@ interface Project {
   achievements: string[];
   icon: React.ReactNode;
   demoUrl?: string;
+  imageUrl?: string;
 }
 
 interface Experience {
@@ -138,6 +140,7 @@ const PROJECTS: Project[] = [
       "Managed user permissions across multiple PCs",
     ],
     icon: <Network className="w-6 h-6" />,
+    imageUrl: "/Active Directory Enterprise Network.png",
   },
 ];
 
@@ -387,6 +390,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [demoModal, setDemoModal] = useState<{ open: boolean; url: string; title: string }>({ open: false, url: "", title: "" });
+  const [imageModal, setImageModal] = useState<{ open: boolean; url: string; title: string }>({ open: false, url: "", title: "" });
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -719,6 +723,19 @@ export default function App() {
                   </a>
                 </div>
               )}
+              {project.imageUrl && (
+                <div className="p-4 border-t border-brand-border bg-black/20">
+                  <button
+                    onClick={() => setImageModal({ open: true, url: project.imageUrl!, title: project.title })}
+                    className="flex items-center gap-2 text-xs font-mono text-brand-primary hover:text-white transition-colors group/btn"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center group-hover/btn:bg-brand-primary/20 transition-colors">
+                      <Eye className="w-4 h-4" />
+                    </div>
+                    VIEW INFOGRAPHIC
+                  </button>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
@@ -778,6 +795,45 @@ export default function App() {
                   allow="fullscreen"
                 />
               </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Image Lightbox Modal */}
+      <AnimatePresence>
+        {imageModal.open && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/95 backdrop-blur-sm z-[60]"
+              onClick={() => setImageModal({ open: false, url: "", title: "" })}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed inset-4 md:inset-12 z-[60] flex flex-col items-center justify-center"
+              onClick={() => setImageModal({ open: false, url: "", title: "" })}
+            >
+              <div className="flex items-center justify-between w-full max-w-4xl mb-4 px-2">
+                <span className="font-mono text-sm text-zinc-400">{imageModal.title}</span>
+                <button
+                  onClick={() => setImageModal({ open: false, url: "", title: "" })}
+                  className="text-zinc-500 hover:text-white transition-colors p-1"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              <img
+                src={imageModal.url}
+                alt={imageModal.title}
+                className="max-w-full max-h-[80vh] rounded-2xl shadow-2xl border border-white/10 object-contain"
+                onClick={(e) => e.stopPropagation()}
+              />
             </motion.div>
           </>
         )}
