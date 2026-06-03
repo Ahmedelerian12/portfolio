@@ -34,6 +34,8 @@ import {
   Minimize2,
   Eye,
 } from "lucide-react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 
 // --- Types ---
 interface Project {
@@ -1431,6 +1433,8 @@ export default function App() {
       </footer>
 
       <ScrollToTop />
+      <SpeedInsights />
+      <Analytics />
     </div>
   );
 }
