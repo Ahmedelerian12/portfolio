@@ -888,9 +888,11 @@ export default function App() {
         </div>
       </div>
 
-      {/* About Section */}
-      <Section id="about" label="01 — Profile" title="Professional Summary">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
+      {/* Main Content */}
+      <main>
+        {/* About Section */}
+        <Section id="about" label="01 — Profile" title="Professional Summary">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-16">
           <div className="space-y-6">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -1377,6 +1379,7 @@ export default function App() {
           </motion.div>
         </div>
       </Section>
+      </main>
 
       {/* Footer */}
       <footer className="py-12 border-t border-brand-border bg-black/40">
